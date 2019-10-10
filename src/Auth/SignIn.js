@@ -113,7 +113,4 @@ const SignIn = ({auth, login, history}) => {
   );
 };
 
-export default withRouter(connect(
-    ({auth}) => {return {auth}},
-    {login})
-(SignIn));
+export default withRouter(connect(({auth}) => {return {auth}}, {login})(SignIn));

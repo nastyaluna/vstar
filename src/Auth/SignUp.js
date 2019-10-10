@@ -114,7 +114,4 @@ const SignUp = ({auth, register, history}) => {
   );
 };
 
-export default withRouter(connect(
-    ({auth}) => {return {auth}},
-    {register})
-(SignUp));
+export default withRouter(connect(({auth}) => {return {auth}}, {register})(SignUp));
