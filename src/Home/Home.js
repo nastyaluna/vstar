@@ -1,18 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {makeStyles} from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Lottie from 'react-lottie';
+import {makeStyles} from '@material-ui/core/styles';
+import makeAnimation from '../utils/makeAnimation';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 import animationData from './keep_walking';
-
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: animationData,
-  rendererSettings: {
-    preserveAspectRatio: 'xMidYMid slice'
-  }
-};
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -30,36 +23,40 @@ const useStyles = makeStyles(theme => ({
 
 const Home = () => {
   const cls = useStyles();
+  const animationOptions = makeAnimation(animationData);
+
   return (
       <div className={cls.home}>
         <div className={cls.box}>
           <Lottie
               width={400}
               height={400}
-              options={defaultOptions}
+              options={animationOptions}
           />
         </div>
         <div className={cls.box}>
-          <Button
-              to="/login"
-              size="large"
-              color="primary"
-              variant="contained"
-              component={Link}
-              className={cls.button}
-          >
-            Login
-          </Button>
-          <Button
-              to="/register"
-              size="large"
-              color="secondary"
-              variant="contained"
-              component={Link}
-              className={cls.button}
-          >
-            Register
-          </Button>
+          <Paper>
+            <Button
+                to="/login"
+                size="large"
+                color="primary"
+                variant="contained"
+                component={Link}
+                className={cls.button}
+            >
+              Login
+            </Button>
+            <Button
+                to="/register"
+                size="large"
+                color="secondary"
+                variant="contained"
+                component={Link}
+                className={cls.button}
+            >
+              Register
+            </Button>
+          </Paper>
         </div>
       </div>
   );
