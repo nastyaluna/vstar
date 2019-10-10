@@ -6,6 +6,10 @@ class App extends Component {
     return (
       <section className="App">
         <Icon>star</Icon>
+        <h1>vstar</h1>
+        <h2>vstar</h2>
+        <h3>vstar</h3>
+        <p>vstar</p>
       </section>
     );
   }
