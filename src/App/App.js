@@ -1,18 +1,15 @@
-import React, {Component} from 'react';
-import Icon from '@material-ui/core/Icon';
+import React from 'react';
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+const muiTheme = createMuiTheme();
 
-class App extends Component {
-  render() {
-    return (
-      <section className="App">
-        <Icon>star</Icon>
-        <h1>vstar</h1>
-        <h2>vstar</h2>
-        <h3>vstar</h3>
-        <p>vstar</p>
-      </section>
-    );
-  }
-}
+const App = () => {
+  return (
+      <MuiThemeProvider theme={muiTheme}>
+        <CssBaseline/>
+        <h1>Vstar</h1>
+      </MuiThemeProvider>
+  );
+};
 
 export default App;
