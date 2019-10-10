@@ -13,6 +13,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: true,
+        error: null,
         isError: false
       };
     case FETCH_LOGIN:
@@ -20,6 +21,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         data: action.payload,
+        error: null,
         isError: false
       };
     case FETCH_REGISTER:
@@ -27,6 +29,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         data: action.payload,
+        error: null,
         isError: false
       };
     case SET_ERROR:
@@ -41,6 +44,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         data: null,
+        error: null,
         isError: false
       };
     default:

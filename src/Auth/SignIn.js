@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {login} from './actions';
+import Loading from '../Loading/Loading';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -37,72 +38,18 @@ const SignIn = ({auth, login, history}) => {
   const cls = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {data} = auth;
+  const {data, isLoading, isError, error} = auth;
 
-  const onLogin = e => {
+  const onLogin = async (e) => {
     e.preventDefault();
     // TODO: add form validation
-    login(email, password);
-    // TODO: before redirect check if the user data have arrived
-    history.push('/dashboard');
+    const response = await login(email, password);
+    if (response && !isError) history.push('/dashboard');
   };
 
   return (
       <Container component="main" maxWidth="xs">
-        <Paper className={cls.paper}>
-          <Avatar className={cls.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Login
-          </Typography>
-          <form className={cls.form} noValidate>
-            <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                onChange={e => setEmail(e.target.value)}
-            />
-            <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={e => setPassword(e.target.value)}
-            />
-            <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={cls.submit}
-                onClick={onLogin}
-            >
-              Done
-            </Button>
-            <Button
-                fullWidth
-                to="/register"
-                color="secondary"
-                component={Link}
-                variant="contained"
-                className={cls.submit}
-            >
-              Don't have an account?
-            </Button>
-          </form>
-        </Paper>
+        <Loading/>
       </Container>
   );
 };

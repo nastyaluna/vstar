@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {register} from './actions';
+import Loading from '../Loading/Loading';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -37,73 +38,74 @@ const SignUp = ({auth, register, history}) => {
   const cls = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {data} = auth;
+  const {data, isLoading, isError, error} = auth;
 
-  const onRegister = e => {
+  const onRegister = async (e) => {
     e.preventDefault();
     // TODO: add form validation
-    register(email, password);
-    // TODO: before redirect check if the user data have arrived
-    history.push('/dashboard');
+    const response = await register(email, password);
+    if (response && !isError) history.push('/dashboard');
   };
 
   return (
       <Container component="main" maxWidth="xs">
-        <Paper className={cls.paper}>
-          <Avatar className={cls.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Register
-          </Typography>
-          <form className={cls.form} noValidate>
-            <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                onChange={e => setEmail(e.target.value)}
-            />
-            <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={e => setPassword(e.target.value)}
-            />
-            <Button
-                fullWidth
-                type="submit"
-                variant="contained"
-                color="secondary"
-                onClick={onRegister}
-                className={cls.submit}
-            >
-              Done
-            </Button>
-            <Button
-                fullWidth
-                to="/login"
-                type="submit"
-                color="primary"
-                component={Link}
-                variant="contained"
-                className={cls.submit}
-            >
-              Already have account?
-            </Button>
-          </form>
-        </Paper>
+        {isLoading ? <Loading/> : (
+          <Paper className={cls.paper}>
+            <Avatar className={cls.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Register
+            </Typography>
+            <form className={cls.form} noValidate>
+              <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  onChange={e => setEmail(e.target.value)}
+              />
+              <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={e => setPassword(e.target.value)}
+              />
+              <Button
+                  fullWidth
+                  type="submit"
+                  variant="contained"
+                  color="secondary"
+                  onClick={onRegister}
+                  className={cls.submit}
+              >
+                Done
+              </Button>
+              <Button
+                  fullWidth
+                  to="/login"
+                  type="submit"
+                  color="primary"
+                  component={Link}
+                  variant="contained"
+                  className={cls.submit}
+              >
+                Already have account?
+              </Button>
+            </form>
+          </Paper>
+        )}
       </Container>
   );
 };
