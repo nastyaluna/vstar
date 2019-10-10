@@ -1,4 +1,4 @@
-import {PROCESS_AUTH, FETCH_LOGIN, FETCH_REGISTER, SET_ERROR, RESET_AUTH} from './constants';
+import {PROCESS_AUTH, FETCH_LOGIN, FETCH_REGISTER, SET_ERROR, RESET_ALL} from './constants';
 import {auth} from '../firebase';
 
 const processAuth = () => ({
@@ -20,13 +20,13 @@ const setError = payload => ({
   payload
 });
 
-const resetAuth = () => ({
-  type: RESET_AUTH
+export const resetAll = () => ({
+  type: RESET_ALL
 });
 
-export const logout = () => {
+export const resetAuth = () => {
   return (dispatch) => {
-    dispatch(resetAuth());
+    dispatch(resetAll());
   };
 };
 

@@ -5,7 +5,7 @@ import makeAnimation from '../utils/makeAnimation';
 import animationData from './astronaut';
 import {makeStyles} from '@material-ui/core';
 import Button from "@material-ui/core/Button";
-import {logout} from '../Auth/actions';
+import {resetAuth} from '../Auth/actions';
 import {connect} from "react-redux";
 
 const useStyles = makeStyles(theme => ({
@@ -17,11 +17,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Dashboard = ({logout}) => {
+const Dashboard = ({resetAuth}) => {
   const cls = useStyles();
   const animationOptions = makeAnimation(animationData);
 
-  const onLogout = () => logout();
+  const onLogout = () => resetAuth();
 
   return (
       <div className={cls.dashboard}>
@@ -44,4 +44,4 @@ const Dashboard = ({logout}) => {
   );
 };
 
-export default connect(null, {logout})(Dashboard);
+export default connect(null, {resetAuth})(Dashboard);

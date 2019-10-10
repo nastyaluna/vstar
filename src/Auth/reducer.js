@@ -1,4 +1,4 @@
-import {PROCESS_AUTH, FETCH_LOGIN, FETCH_REGISTER, SET_ERROR, RESET_AUTH} from "./constants";
+import {PROCESS_AUTH, FETCH_LOGIN, FETCH_REGISTER, SET_ERROR, RESET_ALL} from "./constants";
 
 const INITIAL_STATE = {
   isLoading: false,
@@ -39,7 +39,7 @@ export default (state = INITIAL_STATE, action) => {
         error: action.payload,
         isError: true
       };
-    case RESET_AUTH:
+    case RESET_ALL:
       return {
         ...state,
         isLoading: false,

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
@@ -10,7 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {register} from './actions';
+import {register, resetAuth} from './actions';
 import Loading from '../Loading/Loading';
 import Error from '../Error/Error';
 
@@ -35,18 +35,26 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SignUp = ({auth, register, history}) => {
+const SignUp = ({auth, register, history, resetAuth}) => {
   const cls = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {isLoading, error} = auth;
 
+  useEffect(() => {
+    resetAuth();
+  }, []);
+
   const onRegister = async (e) => {
     e.preventDefault();
+    resetAuth();
     // TODO: добавить нормальную валидацию
     if (email && password) {
       const response = await register(email, password);
-      if (response && !response.message && !error) history.push('/dashboard');
+      if (response && !response.message && !error) {
+        history.push('/dashboard');
+        resetAuth();
+      }
     }
   };
 
@@ -85,7 +93,7 @@ const SignUp = ({auth, register, history}) => {
                   autoComplete="current-password"
                   onChange={e => setPassword(e.target.value)}
               />
-              {error && <Error msg={error}/>}
+              {email && password && error && <Error msg={error}/>}
               <Button
                   fullWidth
                   type="submit"
@@ -114,4 +122,4 @@ const SignUp = ({auth, register, history}) => {
   );
 };
 
-export default withRouter(connect(({auth}) => {return {auth}}, {register})(SignUp));
+export default withRouter(connect(({auth}) => {return {auth}}, {register, resetAuth})(SignUp));
