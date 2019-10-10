@@ -46,7 +46,7 @@ const SignIn = ({auth, login, history}) => {
     // TODO: добавить нормальную валидацию
     if (email && password) {
       const response = await login(email, password);
-      if (response && !error) history.push('/dashboard');
+      if (response && !response.message && !error) history.push('/dashboard');
     }
   };
 
