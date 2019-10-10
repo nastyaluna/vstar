@@ -32,6 +32,9 @@ const useStyles = makeStyles(theme => ({
 
 const SignIn = () => {
   const cls = useStyles();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const onSubmit = () => {};
 
   return (
       <Container component="main" maxWidth="xs">
@@ -53,6 +56,7 @@ const SignIn = () => {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={e => setEmail(e.target.value)}
             />
             <TextField
                 variant="outlined"
@@ -63,6 +67,7 @@ const SignIn = () => {
                 label="Password"
                 type="password"
                 id="password"
+                onChange={e => setPassword(e.target.value)}
                 autoComplete="current-password"
             />
             <Button
@@ -71,6 +76,7 @@ const SignIn = () => {
                 variant="contained"
                 color="primary"
                 className={cls.submit}
+                onClick={onSubmit}
             >
               Done
             </Button>

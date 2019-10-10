@@ -33,6 +33,7 @@ const useStyles = makeStyles(theme => ({
 const SignUp = () => {
   const cls = useStyles();
 
+
   return (
       <Container component="main" maxWidth="xs">
         <Paper className={cls.paper}>
