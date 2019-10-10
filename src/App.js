@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import Icon from '@material-ui/core/Icon';
 
 class App extends Component {
   render() {
     return (
       <section className="App">
-        Vstar
+        <Icon>star</Icon>
       </section>
     );
   }
