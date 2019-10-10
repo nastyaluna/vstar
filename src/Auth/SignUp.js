@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
@@ -8,6 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {register} from './actions';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -30,9 +33,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SignUp = () => {
+const SignUp = ({auth, register, history}) => {
   const cls = useStyles();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const {data} = auth;
 
+  const onRegister = e => {
+    e.preventDefault();
+    // TODO: add form validation
+    register(email, password);
+    // TODO: before redirect check if the user data have arrived
+    history.push('/dashboard');
+  };
 
   return (
       <Container component="main" maxWidth="xs">
@@ -54,6 +67,7 @@ const SignUp = () => {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={e => setEmail(e.target.value)}
             />
             <TextField
                 variant="outlined"
@@ -65,12 +79,14 @@ const SignUp = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={e => setPassword(e.target.value)}
             />
             <Button
                 fullWidth
                 type="submit"
                 variant="contained"
                 color="secondary"
+                onClick={onRegister}
                 className={cls.submit}
             >
               Done
@@ -92,4 +108,7 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default withRouter(connect(
+    ({auth}) => {return {auth}},
+    {register})
+(SignUp));

@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
@@ -8,6 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {login} from './actions';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -30,11 +33,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SignIn = () => {
+const SignIn = ({auth, login, history}) => {
   const cls = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const onSubmit = () => {};
+  const {data} = auth;
+
+  const onLogin = e => {
+    e.preventDefault();
+    // TODO: add form validation
+    login(email, password);
+    // TODO: before redirect check if the user data have arrived
+    history.push('/dashboard');
+  };
 
   return (
       <Container component="main" maxWidth="xs">
@@ -67,8 +78,8 @@ const SignIn = () => {
                 label="Password"
                 type="password"
                 id="password"
-                onChange={e => setPassword(e.target.value)}
                 autoComplete="current-password"
+                onChange={e => setPassword(e.target.value)}
             />
             <Button
                 type="submit"
@@ -76,7 +87,7 @@ const SignIn = () => {
                 variant="contained"
                 color="primary"
                 className={cls.submit}
-                onClick={onSubmit}
+                onClick={onLogin}
             >
               Done
             </Button>
@@ -96,4 +107,7 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default withRouter(connect(
+    ({auth}) => {return {auth}},
+    {login})
+(SignIn));
