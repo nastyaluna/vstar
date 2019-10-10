@@ -38,6 +38,8 @@ export const register = (email, password) => {
       const response =
           await auth.createUserWithEmailAndPassword(email, password);
       if (response) dispatch(fetchRegister(response));
+      if (response && response.message) dispatch(setError(response.message));
+
       return response;
     } catch (e) {
       dispatch(setError(e.message));
@@ -53,6 +55,8 @@ export const login = (email, password) => {
     try {
       const response = await auth.signInWithEmailAndPassword(email, password);
       if (response) dispatch(fetchLogin(response));
+      if (response && response.message) dispatch(setError(response.message));
+
       return response;
     } catch (e) {
       dispatch(setError(e.message));

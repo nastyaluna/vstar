@@ -12,6 +12,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {register} from './actions';
 import Loading from '../Loading/Loading';
+import Error from '../Error/Error';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -38,13 +39,15 @@ const SignUp = ({auth, register, history}) => {
   const cls = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {data, isLoading, isError, error} = auth;
+  const {isLoading, error} = auth;
 
   const onRegister = async (e) => {
     e.preventDefault();
-    // TODO: add form validation
-    const response = await register(email, password);
-    if (response && !isError) history.push('/dashboard');
+    // TODO: добавить нормальную валидацию
+    if (email && password) {
+      const response = await register(email, password);
+      if (response && !error) history.push('/dashboard');
+    }
   };
 
   return (
@@ -82,6 +85,7 @@ const SignUp = ({auth, register, history}) => {
                   autoComplete="current-password"
                   onChange={e => setPassword(e.target.value)}
               />
+              {error && <Error msg={error}/>}
               <Button
                   fullWidth
                   type="submit"
