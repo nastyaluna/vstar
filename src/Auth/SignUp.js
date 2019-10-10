@@ -1,14 +1,18 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Link} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
+    padding: theme.spacing(6),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -23,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(2, 0, 0),
-  },
+  }
 }));
 
 const SignUp = () => {
@@ -31,7 +35,10 @@ const SignUp = () => {
 
   return (
       <Container component="main" maxWidth="xs">
-        <div className={cls.paper}>
+        <Paper className={cls.paper}>
+          <Avatar className={cls.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
           <Typography component="h1" variant="h5">
             Register
           </Typography>
@@ -79,7 +86,7 @@ const SignUp = () => {
               Already have account?
             </Button>
           </form>
-        </div>
+        </Paper>
       </Container>
   );
 };
