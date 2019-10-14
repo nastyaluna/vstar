@@ -39,7 +39,7 @@ const SignUp = ({auth, register, history, resetAuth}) => {
   const cls = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {data, isLoading, error} = auth;
+  const {data, isLoading, error, isError} = auth;
 
   useEffect(() => resetAuth(), []);
 
@@ -76,6 +76,7 @@ const SignUp = ({auth, register, history, resetAuth}) => {
                   name="email"
                   autoComplete="email"
                   autoFocus
+                  error={isError}
                   onChange={e => setEmail(e.target.value)}
               />
               <TextField
@@ -87,6 +88,7 @@ const SignUp = ({auth, register, history, resetAuth}) => {
                   label="Password"
                   type="password"
                   id="password"
+                  error={isError}
                   autoComplete="current-password"
                   onChange={e => setPassword(e.target.value)}
               />
