@@ -39,23 +39,18 @@ const SignIn = ({auth, login, history, resetAuth}) => {
   const cls = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {isLoading, error} = auth;
+  const {data, isLoading, error} = auth;
 
   useEffect(() => {
-    resetAuth();
-  }, []);
-
-  const onLogin = async (e) => {
-    e.preventDefault();
-    resetAuth();
-    // TODO: добавить нормальную валидацию
-    if (email && password) {
-      const response = await login(email, password);
-      if (response && !response.message && !error) {
-        history.push('/dashboard');
-        resetAuth();
-      }
+    if (data && !error) {
+      history.push('/dashboard');
+      resetAuth();
     }
+  });
+
+  const onLogin = (e) => {
+    e.preventDefault();
+    if (email && password) login(email, password);
   };
 
   return (
