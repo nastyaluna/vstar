@@ -41,6 +41,8 @@ const SignIn = ({auth, login, history, resetAuth}) => {
   const [password, setPassword] = useState('');
   const {data, isLoading, error} = auth;
 
+  useEffect(() => resetAuth(), []);
+
   useEffect(() => {
     if (data && !error) {
       history.push('/dashboard');
@@ -88,7 +90,7 @@ const SignIn = ({auth, login, history, resetAuth}) => {
                   autoComplete="current-password"
                   onChange={e => setPassword(e.target.value)}
               />
-              {email && password && error && <Error msg={error}/>}
+              {error && <Error msg={error}/>}
               <Button
                   type="submit"
                   fullWidth
